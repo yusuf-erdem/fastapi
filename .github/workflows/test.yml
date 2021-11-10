@@ -28,10 +28,15 @@ jobs:
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: flit install --symlink
-      - name: Lint
-        if: ${{ matrix.python-version != '3.6' }}
-        run: bash scripts/lint.sh
+      - name: Install Thundra Python Agent
+        uses: thundra-io/thundra-foresight-python-action@action-experiment
+        with:
+          apikey: ${{ secrets.THUNDRA_APIKEY }}
+          project_id: ${{ secrets.THUNDRA_PROJECT_ID }}
       - name: Test
         run: bash scripts/test.sh
+        env:
+          THUNDRA_AGENT_REPORT_REST_BASEURL: https://collector.thundra.me/v1
+          THUNDRA_AGENT_DEBUG_ENABLE: true
       - name: Upload coverage
         uses: codecov/codecov-action@v1
