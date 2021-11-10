@@ -1,18 +1,14 @@
 name: Test
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    types: [opened, synchronize]
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.9]
       fail-fast: false
 
     steps:
