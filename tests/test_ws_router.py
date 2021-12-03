@@ -51,40 +51,41 @@ app.include_router(router)
 app.include_router(prefix_router, prefix="/prefix")
 
 
+@pytest.mark.skip(reason="Test thundra parser")
 def test_app():
     client = TestClient(app)
     with client.websocket_connect("/") as websocket:
         data = websocket.receive_text()
         assert data == "Hello, world!"
 
-
+@pytest.mark.skip(reason="Test thundra parser")
 def test_router():
     client = TestClient(app)
     with client.websocket_connect("/router") as websocket:
         data = websocket.receive_text()
         assert data == "Hello, router!"
 
-
+@pytest.mark.skip(reason="Test thundra parser")
 def test_prefix_router():
     client = TestClient(app)
     with client.websocket_connect("/prefix/") as websocket:
         data = websocket.receive_text()
         assert data == "Hello, router with prefix!"
 
-
+@pytest.mark.skip(reason="Test thundra parser")
 def test_router2():
     client = TestClient(app)
     with client.websocket_connect("/router2") as websocket:
         data = websocket.receive_text()
         assert data == "Hello, router!"
 
-
+@pytest.mark.skip(reason="Test thundra parser")
 def test_router_ws_depends():
     client = TestClient(app)
     with client.websocket_connect("/router-ws-depends/") as websocket:
         assert websocket.receive_text() == "Socket Dependency"
 
-
+@pytest.mark.skip(reason="Test thundra parser")
 def test_router_ws_depends_with_override():
     client = TestClient(app)
     app.dependency_overrides[ws_dependency] = lambda: "Override"
