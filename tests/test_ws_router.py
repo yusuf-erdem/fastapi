@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, FastAPI, WebSocket
 from fastapi.testclient import TestClient
+import pytest
 
 router = APIRouter()
 prefix_router = APIRouter()
