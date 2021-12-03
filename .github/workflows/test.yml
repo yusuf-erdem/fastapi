@@ -28,17 +28,15 @@ jobs:
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: flit install --symlink
-      - name: Install Thundra Python Agent
-        uses: thundra-io/thundra-foresight-python-action@v1
-        with:
-          apikey: ${{ secrets.THUNDRA_APIKEY }}
-          project_id: ${{ secrets.THUNDRA_PROJECT_ID }}
-          test_disable: false
-          agent_version: 3.0.0
       - name: Test
         run: bash scripts/test.sh
         env:
           THUNDRA_AGENT_REPORT_REST_BASEURL: https://collector.thundra.me/v1
           THUNDRA_AGENT_DEBUG_ENABLE: true
-      - name: Upload coverage
-        uses: codecov/codecov-action@v1
+      - name: Archive test results
+        uses: actions/upload-artifact@v2
+        if: success() || failure()
+        with:
+          name: test-result-junit
+          path: result.xml
+
